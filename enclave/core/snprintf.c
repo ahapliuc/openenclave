@@ -65,7 +65,7 @@ static const char* _u64_to_str(char buf[21], uint64_t x)
 
     while (x)
     {
-        char m = (char) (x % 10);
+        char m = (char)(x % 10);
         *--end = m + '0';
         x = x / 10;
     }

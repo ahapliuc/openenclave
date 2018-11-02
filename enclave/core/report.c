@@ -29,9 +29,9 @@ oe_result_t sgx_create_report(
     oe_result_t result = OE_UNEXPECTED;
 
     // Allocate aligned objects as required by EREPORT instruction.
-    OE_ALIGNED(512) sgx_target_info_t ti = {0};
-    OE_ALIGNED(128) sgx_report_data_t rd = {0};
-    OE_ALIGNED(512) sgx_report_t r = {0};
+    OE_ALIGNED(512) sgx_target_info_t ti = {{0}};
+    OE_ALIGNED(128) sgx_report_data_t rd = {{0}};
+    OE_ALIGNED(512) sgx_report_t r = {{{0}}};
 
     /*
      * Reject invalid parameters (report_data may be null).

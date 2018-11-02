@@ -473,7 +473,8 @@ oe_result_t oe_load_pe_enclave_image(
         }
     }
 
-    /* fail if no .text section (theoretically possible ot have no ECALL section */
+    /* fail if no .text section (theoretically possible ot have no ECALL section
+     */
     if (!image->text_rva || !image->oeinfo_rva)
     {
         OE_RAISE(OE_FAILURE);

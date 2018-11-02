@@ -26,7 +26,8 @@
 #ifndef __ASSEMBLER__
 typedef struct _oe_enclave oe_enclave_t;
 
-typedef struct _oe_ecall_args_t {
+typedef struct _oe_ecall_args_t
+{
     void* tcs;
     oe_enclave_t* enclave;
     void (*aep)(void);
@@ -49,8 +50,7 @@ void oe_enter(
 
 #elif defined(_WIN32)
 
-void oe_enter(
-    oe_ecall_args_t* ecall_args);
+void oe_enter(oe_ecall_args_t* ecall_args);
 
 #else
 
@@ -62,13 +62,13 @@ void OE_AEP(void);
 
 #endif /* __ASSEMBLER__ */
 
-#define ECALL_ARG_TCS       0x0
-#define ECALL_ARG_ENCLAVE   0x8
-#define ECALL_ARG_AEP       0x10
-#define ECALL_ARG_ARG1      0x18
-#define ECALL_ARG_ARG2      0x20
-#define ECALL_ARG_ARG1_OUT  0x28
-#define ECALL_ARG_ARG2_OUT  0x30
+#define ECALL_ARG_TCS 0x0
+#define ECALL_ARG_ENCLAVE 0x8
+#define ECALL_ARG_AEP 0x10
+#define ECALL_ARG_ARG1 0x18
+#define ECALL_ARG_ARG2 0x20
+#define ECALL_ARG_ARG1_OUT 0x28
+#define ECALL_ARG_ARG2_OUT 0x30
 
 #ifndef __ASSEMBLER__
 
@@ -107,8 +107,7 @@ int __oe_dispatch_ocall(
 
 #elif defined(_WIN32)
 
-int __oe_dispatch_ocall(
-    oe_ecall_args_t* ecall_args);
+int __oe_dispatch_ocall(oe_ecall_args_t* ecall_args);
 
 #else
 

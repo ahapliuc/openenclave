@@ -6,8 +6,8 @@
 /*
  * Based relocation format.
  *
- * N.B. Including "Windows.h" in Enclave core causes all kinds of 
- *      compiler error. Since we only care about base-reloc 
+ * N.B. Including "Windows.h" in Enclave core causes all kinds of
+ *      compiler error. Since we only care about base-reloc
  *      information, define it here.
  *      The structure image_base_reloc_t must layout exactly as
  *      IMAGE_BASE_RELOCATION, and IMAGE_REL_BASED_DIR64 must match
@@ -20,7 +20,7 @@ typedef struct _image_base_reloc_t
     uint16_t reloc_data[0];
 } image_base_reloc_t;
 
-#define IMAGE_REL_BASED_DIR64	10
+#define IMAGE_REL_BASED_DIR64 10
 
 /*
  *  _reloc_bias is used to calculate relocation difference *BEFORE*

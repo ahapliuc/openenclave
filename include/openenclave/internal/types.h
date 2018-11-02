@@ -120,11 +120,11 @@ typedef struct _oe_ocall_context
 */
 
 #if defined(_WIN32)
-#define oe_va_list  va_list
+#define oe_va_list va_list
 #define oe_va_start va_start
-#define oe_va_arg   va_arg
-#define oe_va_end   va_end
-#define oe_va_copy  va_copy
+#define oe_va_arg va_arg
+#define oe_va_end va_end
+#define oe_va_copy va_copy
 #else
 #define oe_va_list __builtin_va_list
 #define oe_va_start __builtin_va_start

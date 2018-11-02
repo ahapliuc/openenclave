@@ -96,7 +96,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES GNU OR CMAKE_CXX_COMPILER_ID MATCHES Clang)
         -Wl,--no-undefined,-Bstatic,-Bsymbolic,--export-dynamic,-pie)
 
     # jump.s must be optimized for the correct call-frame.
-    set_source_files_properties(jump.c PROPERTIES COMPILE_FLAGS -O2)
+    set_source_files_properties(linux/jump.c PROPERTIES COMPILE_FLAGS -O2)
 endif()
 
 set_property(TARGET oecore PROPERTY ARCHIVE_OUTPUT_DIRECTORY ${OE_LIBDIR}/openenclave/enclave)

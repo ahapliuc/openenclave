@@ -213,24 +213,25 @@ static oe_result_t _do_eenter(
 
         if (enclave->simulate)
         {
-            OE_CHECK(_enter_sim(
-                enclave,
-                tcs,
-                aep,
-                ecall_args.arg1,
-                ecall_args.arg2,
-                &ecall_args.arg1_out,
-                &ecall_args.arg2_out));
+            OE_CHECK(
+                _enter_sim(
+                    enclave,
+                    tcs,
+                    aep,
+                    ecall_args.arg1,
+                    ecall_args.arg2,
+                    &ecall_args.arg1_out,
+                    &ecall_args.arg2_out));
         }
         else
         {
-            /*
-             * TODO: change Linux to use ecall_args directly so the same
-             *       implementation can be used.
-             *
-             * N.B. Need someone familiar with Linux assembly to
-             *      re-implement oe_enter.
-             */
+/*
+ * TODO: change Linux to use ecall_args directly so the same
+ *       implementation can be used.
+ *
+ * N.B. Need someone familiar with Linux assembly to
+ *      re-implement oe_enter.
+ */
 
 #if defined(__linux__)
 

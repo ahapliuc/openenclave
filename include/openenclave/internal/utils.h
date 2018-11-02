@@ -120,25 +120,25 @@ OE_INLINE uint64_t StrCode(const char* s, uint64_t n)
 #define OE_ATOMIC_MEMORY_BARRIER_ACQUIRE() asm volatile("" ::: "memory")
 #define OE_ATOMIC_MEMORY_BARRIER_RELEASE() asm volatile("" ::: "memory")
 
-OE_INLINE uint32_t oe_exchange_acquire(volatile uint32_t*ptr, uint32_t value)
+OE_INLINE uint32_t oe_exchange_acquire(volatile uint32_t* ptr, uint32_t value)
 {
     asm volatile(
         "lock xchg %0, %1;"
-        : "=r"(value)       /* %0 */
-        : "m"(*ptr),        /* %1 */
-          "0"(value)        /* also %2 */
+        : "=r"(value) /* %0 */
+        : "m"(*ptr),  /* %1 */
+          "0"(value)  /* also %2 */
         : "memory");
 
     return value;
 }
 
-OE_INLINE void oe_write_release(volatile uint32_t*ptr, uint32_t value)
+OE_INLINE void oe_write_release(volatile uint32_t* ptr, uint32_t value)
 {
     asm volatile(
         "movl %0, %1;"
         :
-        : "r"(value),       /* %0 */
-          "m"(*ptr)         /* %1 */
+        : "r"(value), /* %0 */
+          "m"(*ptr)   /* %1 */
         : "memory");
 }
 
@@ -164,13 +164,13 @@ OE_INLINE void oe_pause(void)
 #define OE_ATOMIC_MEMORY_BARRIER_ACQUIRE()
 #define OE_ATOMIC_MEMORY_BARRIER_RELEASE()
 
-uint32_t oe_exchange_acquire(volatile uint32_t*ptr, uint32_t value);
-void oe_write_release(volatile uint32_t*ptr, uint32_t value);
+uint32_t oe_exchange_acquire(volatile uint32_t* ptr, uint32_t value);
+void oe_write_release(volatile uint32_t* ptr, uint32_t value);
 uint64_t oe_rand(void);
 
 #pragma intrinsic(_mm_pause)
 void _mm_pause(void);
-#define oe_pause  _mm_pause
+#define oe_pause _mm_pause
 
 #pragma intrinsic(__readgsqword)
 uint64_t __readgsqword(uint32_t offset);

@@ -51,7 +51,7 @@ char* oe_hex_string(
     return str;
 }
 
-#define CHUNK_SIZE	1024
+#define CHUNK_SIZE 1024
 void oe_hex_dump(const void* data, size_t size)
 {
     const uint8_t* p = (const uint8_t*)data;

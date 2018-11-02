@@ -39,7 +39,6 @@ void oe_divide_by_zero(void);
 
 #endif
 
-
 OE_EXTERNC_END
 
 #endif /* _OE_FAULT_H */
