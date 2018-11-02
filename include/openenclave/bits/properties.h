@@ -23,9 +23,6 @@ OE_EXTERNC_BEGIN
 /**
  * @cond DEV
  */
-/* Injected by OE_SET_ENCLAVE_SGX macro and by the signing tool (oesign) */
-#define OE_INFO_SECTION_NAME ".oeinfo"
-#define OE_ECALL_SECTION_NAME ".ecall"
 
 /* Max number of threads in an enclave supported */
 #define OE_SGX_MAX_TCS 32
@@ -96,8 +93,27 @@ typedef struct _oe_sgx_enclave_properties
     uint64_t end_marker;
 } oe_sgx_enclave_properties_t;
 
+/* Injected by OE_SET_ENCLAVE_SGX macro */
+#define OE_INFO_SECTION_NAME ".oeinfo"
+
+#if defined(__linux__)
+
 #define OE_INFO_SECTION_BEGIN \
     OE_EXTERNC __attribute__((section(OE_INFO_SECTION_NAME)))
+
+#elif defined(_WIN32)
+
+#pragma section(OE_INFO_SECTION_NAME, read)
+
+#define OE_INFO_SECTION_BEGIN \
+    OE_EXTERNC __declspec(allocate(OE_INFO_SECTION_NAME))
+
+#else
+
+#error("Unsupported configuration!")
+
+#endif
+
 #define OE_INFO_SECTION_END
 
 #define OE_MAKE_ATTRIBUTES(ALLOW_DEBUG) \
