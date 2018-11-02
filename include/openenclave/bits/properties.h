@@ -104,9 +104,8 @@ typedef struct _oe_sgx_enclave_properties
 #elif defined(_WIN32)
 
 #pragma section(OE_INFO_SECTION_NAME, read)
-
 #define OE_INFO_SECTION_BEGIN \
-    OE_EXTERNC __declspec(allocate(OE_INFO_SECTION_NAME))
+    OE_EXTERNC __declspec(allocate(OE_INFO_SECTION_NAME)) 
 
 #else
 
@@ -157,33 +156,33 @@ typedef struct _oe_sgx_enclave_properties
     OE_INFO_SECTION_BEGIN                                                 \
     volatile const oe_sgx_enclave_properties_t oe_enclave_properties_sgx = \
     {                                                                     \
-        .header =                                                         \
+        /*.header = */                                                    \
         {                                                                 \
-            .size = sizeof(oe_sgx_enclave_properties_t),                  \
-            .enclave_type = OE_ENCLAVE_TYPE_SGX,                          \
-            .size_settings =                                              \
+            /*.size = */ sizeof(oe_sgx_enclave_properties_t),             \
+            /* .enclave_type = */ OE_ENCLAVE_TYPE_SGX,                    \
+            /* .size_settings = */                                        \
             {                                                             \
-                .num_heap_pages = HEAP_PAGE_COUNT,                        \
-                .num_stack_pages = STACK_PAGE_COUNT,                      \
-                .num_tcs = TCS_COUNT                                      \
+                /* .num_heap_pages = */ HEAP_PAGE_COUNT,                  \
+                /* .num_stack_pages = */ STACK_PAGE_COUNT,                \
+                /* .num_tcs = */ TCS_COUNT                                \
             }                                                             \
         },                                                                \
-        .config =                                                         \
+        /*.config = */                                                    \
         {                                                                 \
-            .product_id = PRODUCT_ID,                                     \
-            .security_version = SECURITY_VERSION,                         \
-            .padding = 0,                                                 \
-            .attributes = OE_MAKE_ATTRIBUTES(ALLOW_DEBUG)                 \
+            /* .product_id = */ PRODUCT_ID,                               \
+            /* .security_version = */ SECURITY_VERSION,                   \
+            /* .padding = */ 0,                                           \
+            /* .attributes = */ OE_MAKE_ATTRIBUTES(ALLOW_DEBUG)           \
         },                                                                \
-        .image_info =                                                     \
-        {                                                                 \
-            0                                                             \
-        },                                                                \
-        .sigstruct =                                                      \
+        /* .image_info = */                                               \
         {                                                                 \
             0                                                             \
         },                                                                \
-        .end_marker = 0xecececececececec,                                 \
+        /* .sigstruct =  */                                               \
+        {                                                                 \
+            0                                                             \
+        },                                                                \
+        /*.end_marker = */ 0xecececececececec,                            \
     };                                                                    \
     OE_INFO_SECTION_END
 
