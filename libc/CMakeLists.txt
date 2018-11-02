@@ -730,10 +730,10 @@ endif ()
 
 # This project (and is dependents) require the enclave headers and
 # library.
-target_link_libraries(oelibc PRIVATE oelibasm PUBLIC oecore)
+target_link_libraries(oelibc PUBLIC oelibasm PUBLIC oecore)
 
 # As a pre-build step, place the musl LIBC headers.
-add_dependencies(oelibc oelibasm oelibc_includes)
+add_dependencies(oelibc oelibc_includes)
 
 target_include_directories(oelibc PRIVATE
   ${PROJECT_BINARY_DIR}/3rdparty/musl/musl/src/internal
