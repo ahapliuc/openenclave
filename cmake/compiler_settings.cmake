@@ -70,7 +70,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   # Disable this particular warning because `-isystem` is being to
   # sent to clang when assembling, and is at that point unrecognized.
   # TODO: See #760: Fix this when errors are better propagated.
-  add_compile_options(-Wno-error=unused-command-line-argument)
+   # add_compile_options(-Wno-error=unused-command-line-argument)
 endif ()
 
 if (CMAKE_CXX_COMPILER_ID MATCHES GNU OR CMAKE_CXX_COMPILER_ID MATCHES Clang)

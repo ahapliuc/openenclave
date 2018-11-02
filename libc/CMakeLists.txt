@@ -8,12 +8,27 @@
 
 set(MUSLSRC ${PROJECT_SOURCE_DIR}/3rdparty/musl/musl/src)
 
-add_library(oelibc STATIC
+add_library(oelibasm STATIC 
     abort.S
+    exp2l.S
+    ${MUSLSRC}/fenv/x86_64/fenv.s
+    ${MUSLSRC}/math/x86_64/acosl.s
+    ${MUSLSRC}/math/x86_64/asinl.s
+    ${MUSLSRC}/math/x86_64/log1pl.s
+    ${MUSLSRC}/math/x86_64/log2l.s
+    ${MUSLSRC}/math/x86_64/logl.s
+    #${MUSLSRC}/math/x86_64/exp2l.s
+    ${MUSLSRC}/math/x86_64/sqrt.s
+    ${MUSLSRC}/math/x86_64/sqrtl.s
+    ${MUSLSRC}/math/x86_64/sqrtf.s
+    ${MUSLSRC}/setjmp/x86_64/longjmp.s
+    ${MUSLSRC}/setjmp/x86_64/setjmp.s)
+    
+    
+add_library(oelibc STATIC
     arc4random.c
     atexit.c
-    dladdr.c
-    exp2l.S
+    dladdr.c    
     libunwind_stubs.c
     link.c
     locale.c
@@ -140,7 +155,6 @@ add_library(oelibc STATIC
     ${MUSLSRC}/fenv/fesetround.c
     ${MUSLSRC}/fenv/feupdateenv.c
     ${MUSLSRC}/fenv/__flt_rounds.c
-    ${MUSLSRC}/fenv/x86_64/fenv.s
     ${MUSLSRC}/internal/floatscan.c
     ${MUSLSRC}/internal/intscan.c
     ${MUSLSRC}/internal/libc.c
@@ -373,15 +387,6 @@ add_library(oelibc STATIC
     ${MUSLSRC}/math/trunc.c
     ${MUSLSRC}/math/truncf.c
     ${MUSLSRC}/math/truncl.c
-    ${MUSLSRC}/math/x86_64/acosl.s
-    ${MUSLSRC}/math/x86_64/asinl.s
-    ${MUSLSRC}/math/x86_64/log1pl.s
-    ${MUSLSRC}/math/x86_64/log2l.s
-    ${MUSLSRC}/math/x86_64/logl.s
-    #${MUSLSRC}/math/x86_64/exp2l.s
-    ${MUSLSRC}/math/x86_64/sqrt.s
-    ${MUSLSRC}/math/x86_64/sqrtl.s
-    ${MUSLSRC}/math/x86_64/sqrtf.s
     ${MUSLSRC}/misc/basename.c
     ${MUSLSRC}/misc/dirname.c
     ${MUSLSRC}/mman/mmap.c
@@ -427,8 +432,6 @@ add_library(oelibc STATIC
     ${MUSLSRC}/search/insque.c
     ${MUSLSRC}/search/lsearch.c
     ${MUSLSRC}/search/tsearch_avl.c
-    ${MUSLSRC}/setjmp/x86_64/longjmp.s
-    ${MUSLSRC}/setjmp/x86_64/setjmp.s
     ${MUSLSRC}/stat/stat.c
     ${MUSLSRC}/stdio/asprintf.c
     ${MUSLSRC}/stdio/asprintf.c
@@ -655,9 +658,17 @@ target_compile_options(oelibc PRIVATE
     -fno-builtin-memset
     -ffreestanding
     -mrdrnd)
+target_compile_options(oelibasm PRIVATE
+    -fno-builtin-memcpy
+    -fno-builtin-memset
+    -ffreestanding
+    -mrdrnd)
 
 if (CMAKE_C_COMPILER_ID MATCHES GNU)
   target_compile_options(oelibc PRIVATE
+    -fexcess-precision=standard
+    -frounding-math)
+  target_compile_options(oelibasm PRIVATE
     -fexcess-precision=standard
     -frounding-math)
 endif ()
@@ -668,10 +679,22 @@ if (CMAKE_C_COMPILER_ID MATCHES GNU OR CMAKE_C_COMPILER_ID MATCHES Clang)
     -Wno-missing-braces
     -Wno-parentheses
     -Wno-unknown-pragmas)
+  target_compile_options(oelibasm PRIVATE
+    -Wno-missing-braces
+    -Wno-parentheses
+    -Wno-unknown-pragmas)
 endif ()
 # Second: compiler-specific warnings:
 if (CMAKE_C_COMPILER_ID MATCHES GNU)
   target_compile_options(oelibc PRIVATE
+    -Wno-jump-misses-init
+    -Wno-maybe-uninitialized
+    -Wno-unknown-pragmas
+    -Wno-unused-but-set-variable
+    -Wno-unused-function
+    -Wno-unused-value
+    -Wno-unused-variable)
+  target_compile_options(oelibasm PRIVATE
     -Wno-jump-misses-init
     -Wno-maybe-uninitialized
     -Wno-unknown-pragmas
@@ -687,20 +710,30 @@ elseif (CMAKE_C_COMPILER_ID MATCHES Clang)
     -Wno-string-plus-int
     -Wno-typedef-redefinition
     -Wno-unneeded-internal-declaration)
+  target_compile_options(oelibasm PRIVATE
+    -Wno-dangling-else
+    -Wno-ignored-attributes
+    -Wno-logical-op-parentheses
+    -Wno-string-plus-int
+    -Wno-typedef-redefinition
+    -Wno-unneeded-internal-declaration
+    -Wno-unused-command-line-argument)
 endif ()
 
 target_compile_definitions(oelibc PRIVATE _XOPEN_SOURCE=700)
+target_compile_definitions(oelibasm PRIVATE _XOPEN_SOURCE=700)
 
 if (USE_DEBUG_MALLOC)
   target_compile_definitions(oelibc PRIVATE OE_USE_DEBUG_MALLOC)
+  target_compile_definitions(oelibasm PRIVATE OE_USE_DEBUG_MALLOC)
 endif ()
 
 # This project (and is dependents) require the enclave headers and
 # library.
-target_link_libraries(oelibc PUBLIC oecore)
+target_link_libraries(oelibc PRIVATE oelibasm PUBLIC oecore)
 
 # As a pre-build step, place the musl LIBC headers.
-add_dependencies(oelibc oelibc_includes)
+add_dependencies(oelibc oelibasm oelibc_includes)
 
 target_include_directories(oelibc PRIVATE
   ${PROJECT_BINARY_DIR}/3rdparty/musl/musl/src/internal
