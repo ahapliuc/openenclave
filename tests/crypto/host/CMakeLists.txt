@@ -13,6 +13,9 @@ add_executable(hostcrypto
     ../tests.c)
 
 add_custom_command(TARGET hostcrypto
+COMMAND ${CMAKE_COMMAND} -E copy  ${CMAKE_CURRENT_SOURCE_DIR}/${DATA_DIR}/sample.cnf ${CMAKE_CURRENT_BINARY_DIR}/${DATA_DIR}/sample.cnf
+COMMAND openssl ecparam -name prime256v1 -genkey -noout -out prime256v1-key.pem
+COMMAND openssl req -config ${DATA_DIR}/sample.cnf  -new -x509 -key prime256v1-key.pem -out ${DATA_DIR}/asn1_cert.pem -subj "/CN=Intel SGX PCK Processor CA/O=Intel Corporation/L=Santa Clara/ST=CA/C=US" -sha256 -extensions v3_req
 COMMAND mkdir -p ${CMAKE_CURRENT_BINARY_DIR}/${DATA_DIR}
 COMMAND ${CMAKE_COMMAND} -E copy  ${CMAKE_CURRENT_SOURCE_DIR}/${DATA_DIR}/intermediate.cnf ${CMAKE_CURRENT_BINARY_DIR}/${DATA_DIR}/intermediate.cnf
 COMMAND ${CMAKE_COMMAND} -E copy  ${CMAKE_CURRENT_SOURCE_DIR}/${DATA_DIR}/root.cnf ${CMAKE_CURRENT_BINARY_DIR}/${DATA_DIR}/root.cnf

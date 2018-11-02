@@ -5,10 +5,10 @@
 
 void TestAll()
 {
-    //    TestASN1();
+    TestASN1();
     TestCRL();
     //   TestEC();
-      TestRandom();
+    TestRandom();
     //    TestRSA();
-     TestSHA();
+    TestSHA();
 }
