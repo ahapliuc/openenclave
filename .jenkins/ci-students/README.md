@@ -6,7 +6,9 @@ This role will install needed Jenkins students (slaves) for both linux and windo
 Requirements
 ------------
 
-Ansible > 2.2.2.0
+All the python requierements are in the requirements.txt and can be installed with 
+
+pip2 install -r requierements.txt
 
 Role Variables
 --------------
