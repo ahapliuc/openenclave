@@ -1,6 +1,30 @@
     - hosts: servers
       become: yes
       tasks:
+         - name: Add repo keys
+           apt_key: url={{item}} state=present
+           with_items:
+                   - https://download.01.org/intel-sgx/sgx_repo/ubuntu/intel-sgx-deb.key
+                   - https://apt.llvm.org/llvm-snapshot.gpg.key
+                   - https://packages.microsoft.com/keys/microsoft.asc
+         - name: Add repositories for openenclave
+           apt_repository: repo={{item}} state=present update_cache=yes
+           with_items:
+                   - deb http://archive.canonical.com/ubuntu hardy partner
+                   - deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-7 main
+                   - deb [arch=amd64] https://packages.microsoft.com/ubuntu/16.04/prod xenial main
+         - name: Install  prerequisite packages
+           apt: name{{item}} state=present update_cache=yes
+           with_items:
+                   - clang-7
+                   - libssl-dev
+                   - make
+                   - gcc
+                   - gdb
+                   - g++
+                   - pkg-config
+          
+          
          - name: Install jre needed by Jenkins
            apt: name{{item}} state=present update_cache=yes
            with_items:
