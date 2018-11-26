@@ -1,0 +1,22 @@
+    - hosts: servers
+      become: yes
+      tasks:
+         - name: Install jre needed by Jenkins
+           apt: name{{item}} state=present update_cache=yes
+           with_items:
+                   - openjdk-8-jre
+#         - include: tasks/external_role.yml
+         - name: Create the jenkins group
+           group:
+                   name: jenkins
+                   state: present
+         - name: Add the Jenkins user
+           user:
+                name: jenkins
+                group: jenkins      
+      roles:
+         - { role: kobanyan.jenkins-jnlp-slave,
+         jenkins_master: "http://172.26.179.203:8080",
+         jenkins_slave_secret: NOTAREALPASSWORD,
+         jenkins_slave_user: jenkins ,
+         jenkins_slave_group: jenkins } 
