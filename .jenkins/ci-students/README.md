@@ -10,6 +10,10 @@ All the python requierements are in the requirements.txt and can be installed wi
 
 pip2 install -r requierements.txt
 
+Ansible >=2.2
+Ubuntu 16.04 targets (should work with 18.04 also, but not tested)
+Create the node on Jenkins master
+
 Role Variables
 --------------
 
@@ -20,14 +24,10 @@ Dependencies
 
 none
 
-Example Playbook
+Example running
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+ansible-playbook -i hosts deploy_jenkins.yml -u 
 
 License
 -------
