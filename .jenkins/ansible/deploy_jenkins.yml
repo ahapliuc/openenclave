@@ -1,5 +1,7 @@
     - hosts: linux-slaves
       become: yes
+      vars_files:
+         - vars/variables.var
       tasks:
          - name: Add repo keys
            apt_key: url={{item}} state=present
@@ -51,10 +53,6 @@
          - name: Add the Jenkins user
            user:
                 name: jenkins
-                group: jenkins      
-      roles:
-         - { role: kobanyan.jenkins-jnlp-slave,
-         jenkins_master: "http://172.26.179.203:8080",
-         jenkins_slave_secret: "eb0a39fdfec932e7847877329a87abe85aa2402fd2f4c6695def9192c9cf360d", #The secret must be taken from when the node is created
-         jenkins_slave_user: jenkins ,
-         jenkins_slave_group: jenkins } 
+                group: jenkins
+         - import_role:
+                name: kobanyan.jenkins-jnlp-slave 
