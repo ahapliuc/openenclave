@@ -9,7 +9,7 @@ Requirements
 All the python requierements are in the requirements.txt and can be installed with:
 
 ```
-pip install -r requierements.txt
+pip3 install -r requierements.txt
 ```
 
 Ansible >=2.7
@@ -38,6 +38,4 @@ Example running
 ----------------
 ```
 ansible-playbook -i hosts deploy_jenkins.yml -u **USER**
-
 ```
-
