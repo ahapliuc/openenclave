@@ -45,7 +45,6 @@
            apt: name{{item}} state=present update_cache=yes
            with_items:
                    - openjdk-8-jre
-#         - include: tasks/external_role.yml
          - name: Create the jenkins group
            group:
                    name: jenkins

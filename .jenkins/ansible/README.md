@@ -6,7 +6,7 @@ This role will install needed Jenkins students (slaves) for both linux and windo
 Requirements
 ------------
 
-All the python requierements are in the requirements.txt and can be installed with:
+All the python requierements are in the requierements.txt and can be installed with:
 
 ```
 pip3 install -r requierements.txt
