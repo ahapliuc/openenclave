@@ -1,7 +1,7 @@
 CI Students
 =========
 
-This role will install needed Jenkins students (slaves) for both linux and windows. That includes all the needed requirements by the project
+This role will install needed Jenkins students (slaves) for both linux and windows. That includes all the needed requirements for openenclave.
 
 Requirements
 ------------
