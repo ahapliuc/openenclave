@@ -6,9 +6,9 @@ This role will install needed Jenkins students (slaves) for both linux and windo
 Requirements
 ------------
 
-All the python requierements are in the requirements.txt and can be installed with 
+All the python requierements are in the requirements.txt and can be installed with:
 
-pip2 install -r requierements.txt
+_pip2 install -r requierements.txt_
 
 Ansible >=2.2
 
@@ -16,9 +16,9 @@ Ubuntu 16.04 targets (should work with 18.04 also, but not tested)
 
 Create the node on Jenkins master
 
-Add external role:
+Add the external role:
 
-ansible-galaxy install kobanyan.jenkins-jnlp-slave
+_ansible-galaxy install kobanyan.jenkins-jnlp-slave_
 
 Role Variables
 --------------
@@ -33,7 +33,7 @@ https://galaxy.ansible.com/kobanyan/jenkins-jnlp-slave
 Example running
 ----------------
 
-ansible-playbook -i hosts deploy_jenkins.yml -u 
+ansible-playbook -i hosts deploy_jenkins.yml -u **USER**
 
 License
 -------
