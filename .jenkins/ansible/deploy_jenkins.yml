@@ -1,4 +1,4 @@
-    - hosts: servers
+    - hosts: linux-slaves
       become: yes
       tasks:
          - name: Add repo keys

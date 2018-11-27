@@ -8,9 +8,11 @@ Requirements
 
 All the python requierements are in the requirements.txt and can be installed with:
 
-_pip2 install -r requierements.txt_
+```
+pip install -r requierements.txt
+```
 
-Ansible >=2.2
+Ansible >=2.7
 
 Ubuntu 16.04 targets (should work with 18.04 also, but not tested)
 
@@ -18,7 +20,9 @@ Create the node on Jenkins master
 
 Add the external role:
 
-_ansible-galaxy install kobanyan.jenkins-jnlp-slave_
+```
+ansible-galaxy install kobanyan.jenkins-jnlp-slave
+```
 
 Role Variables
 --------------
@@ -32,12 +36,8 @@ https://galaxy.ansible.com/kobanyan/jenkins-jnlp-slave
 
 Example running
 ----------------
-
+```
 ansible-playbook -i hosts deploy_jenkins.yml -u **USER**
 
-License
--------
-
-This project is released under the MIT License.
-
+```
 

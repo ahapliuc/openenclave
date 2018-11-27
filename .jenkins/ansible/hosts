@@ -1,6 +1,6 @@
 [defaults]
 
-[servers]
+[linux-slaves]
 172.26.179.202
 
 
