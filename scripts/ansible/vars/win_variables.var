@@ -1,0 +1,8 @@
+jenkins_win_user:
+jenkins_win_password:
+jenkins_win_dir:
+jdk_package:
+java_major_version: 
+java_minor_version:
+jenkins_master:
+jenkins_secret:
