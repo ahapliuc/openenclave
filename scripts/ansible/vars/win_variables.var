@@ -1,3 +1,7 @@
+$ cat deploy_jenkins.yml
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
 jenkins_win_user:
 jenkins_win_password:
 jenkins_win_dir:

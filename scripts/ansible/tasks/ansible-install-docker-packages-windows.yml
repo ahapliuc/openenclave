@@ -1,0 +1,19 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
+---
+- name: Enable Windows Container Feature
+  win_feature:
+    name: Containers
+    state: present
+- name: Install Nuget Package Provider
+  win_shell: Install-PackageProvider -Name "NuGet" -MinimumVersion "2.8.5.201" -Force
+- name: Install Docker Msft Module
+  win_shell: Install-Module -Name "DockerMsftProvider" -Repository "PSGallery" -Force
+- name: Install Docker package #error in this task
+  win_shell: Install-Package –ProviderName "DockerMsftProvider" -Name "Docker" -Force
+- name: Start docker service   #Start-Service docker
+  win_service:
+    name: docker
+    state: started
+    start_mode: auto
