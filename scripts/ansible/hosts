@@ -5,3 +5,5 @@
 
 [linux-slaves]
 IPADDRESS
+[windows-slaves]
+IPADDRESS
