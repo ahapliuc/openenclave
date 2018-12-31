@@ -10,3 +10,4 @@ java_major_version:
 java_minor_version:
 jenkins_master:
 jenkins_secret:
+SGX-version:

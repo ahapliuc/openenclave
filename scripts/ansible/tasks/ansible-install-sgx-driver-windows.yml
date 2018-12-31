@@ -4,10 +4,12 @@
 - name: Download Intel SGX DCAP Driver
   get_url:
     url: https://downloadcenter.intel.com/downloads/eula/28154/Intel-Software-Guard-Extensions-Intel-SGX-Driver-for-Windows-?httpDown=https%3A%2F%2Fdownloadmirror.intel.com%2F28154%2Feng%2Fintel_sgx_win_2.1.100..46245_PV.zip
-    dest: "C:/tmp"
+    dest: %USERPROFILE%\AppData\Local\{{SGX-version}}
 
 - name: Install the Intel SGX DCAP Driver
-  command: /tmp/sgx_linux_x64_driver_dcap_36594a7.bin
+  win_shell:  %USERPROFILE%\AppData\Local\{{SGX-version}}\Intel(R)_SGX_Windows_SDK_{{SGX-version}}.exe --a install 
 
 - name: Remove the Intel SGX DCAP Driver installer
-  file: path=/tmp/sgx_linux_x64_driver_dcap_36594a7.bin state=absent
+  win_file:
+    path: %USERPROFILE%\AppData\Local\{{SGX-version}}
+    state: absent
