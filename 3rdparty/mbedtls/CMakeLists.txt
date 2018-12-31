@@ -3,6 +3,21 @@
 
 set(MBEDTLS_WRAP_CFLAGS "-nostdinc -I${OE_INCDIR}/openenclave/libc -fPIC -fno-builtin-udivti3 ${SPECTRE_MITIGATION_FLAGS}")
 
+if (USE_CLANGW)
+  set(MBEDTLS_WRAP_CFLAGS "-target x86_64-pc-linux ${MBEDTLS_WRAP_CFLAGS}")
+  # Setup clang wrapper toolchain
+  set(MBEDTLS_TOOLCHAIN "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_CURRENT_SOURCE_DIR}/toolchain-clangw.cmake")
+
+  # Setup linker
+  find_program(LLVM_AR "llvm-ar.exe")
+  set(MBEDTLS_LINKER "-DCMAKE_AR=${LLVM_AR}")
+  set(MBEDTLS_COMPILER "")
+else()
+  set(MBEDTLS_TOOLCHAIN "")
+  set(MBEDTLS_LINKER "")
+  set(MBEDTLS_COMPILER "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}")
+endif()
+
 # Create a patched version of mbed TLS's `config.h` that the external
 # project depends on.
 string(TOUPPER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE)
@@ -24,14 +39,20 @@ ExternalProject_Add(mbedtls-wrap
     ${CMAKE_CURRENT_BINARY_DIR}/config.h <SOURCE_DIR>/include/mbedtls/config.h
 
   CMAKE_ARGS
-    -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+    ${MBEDTLS_TOOLCHAIN}
+    ${MBEDTLS_LINKER}
+    ${MBEDTLS_COMPILER}
     -DCMAKE_C_FLAGS=${MBEDTLS_WRAP_CFLAGS}
     -DENABLE_PROGRAMS=OFF
     -DENABLE_TESTING=OFF
     -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
 
   # This is a no-op to override the default.
-  INSTALL_COMMAND "")
+  INSTALL_COMMAND ""
+  BYPRODUCTS
+    <BINARY_DIR>/library/libmbedtls.a
+    <BINARY_DIR>/library/libmbedx509.a
+    <BINARY_DIR>/library/libmbedcrypto.a)
 
 ExternalProject_Get_property(mbedtls-wrap SOURCE_DIR)
 ExternalProject_Get_property(mbedtls-wrap BINARY_DIR)

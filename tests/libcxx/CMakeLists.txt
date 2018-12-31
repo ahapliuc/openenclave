@@ -13,7 +13,7 @@ endif()
 
 add_subdirectory(host)
 
-if (UNIX)
+if (BUILD_ENCLAVES)
 	add_subdirectory(enc)
 endif()
 
@@ -45,5 +45,5 @@ foreach(testcase ${alltests})
 	endif()
     endif()
 
-    add_enclave_test(tests/libcxxtest-${name} ./host libcxx_host ./enc libcxxtest-${name}_enc)
+    add_enclave_test(tests/libcxxtest-${name} libcxx_host libcxxtest-${name}_enc)
 endforeach(testcase)

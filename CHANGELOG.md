@@ -20,7 +20,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - oe-gdb allows attaching to a host that is already running
 - Added Quote Enclave Identity validation into oe_verify_report implementation
 - Added OE SDK internal logging mechanism
-- Support for thread local variables (both GNU __thread and C++11 thread_local)
+- Support for thread local variables 
+   - Both GNU __thread and C++11 thread_local
+   - Both hardware and simulation mode 
+   - Local-Exec and Initial-Exec thread-local storage models
 
 ### Changed
 
@@ -37,6 +40,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 
 - String based `ocalls`/`ecalls`, `OE_ECALL`, and `OE_OCALL` macros.
+
+[v0.4.1] - 2018-12-21
+---------------------
+
+v0.4.1 contains a small fix to work with Intel's new ISV version bump.
+
+### Changed
+
+- This allows the OE SDK to continue to support reports signed by QE SVN=1,
+  and at the same time also allow a newer QE SVN (greater than 1) during the
+  oe_verify_report process.
 
 [v0.4.0] - 2018-10-08
 ---------------------
