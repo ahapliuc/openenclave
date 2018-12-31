@@ -6,6 +6,11 @@
 
 - name: Add LLVM repo for CLang 7 with Spectre mitigation
   apt_repository: repo="deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-7 main" state=present update_cache=yes
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
+
+- name: Add LLVM repo for CLan7 with Spectre mitigation
+  apt_repository: repo="deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-7 main" state=present update_cache=yes
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'bionic'
 
 - name: Install Clang 7 to build with Spectre mitigation
   apt:
@@ -32,6 +37,30 @@
     ]
     state: present
     update_cache: yes
+    when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
+
+- name: Install  prerequisite packages
+  apt:
+    name: [
+       autoconf,
+       clang-format-3.9,
+       doxygen,
+       gdb,
+       graphviz,
+       libexpat1-dev,
+       libssl-dev,
+       libtool,
+       make,
+       ocaml-native-compilers,
+       openssl,
+       pkg-config,
+       shellcheck,
+       subversion
+    ]
+    state: present
+    update_cache: yes
+    when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'bionic'
+
 
 # This will unpack the archive in / then rename the /cmake-3.13.1-Linux-x86_64 folder into /cmake
 - name: Install CMake 3.13.1
@@ -53,3 +82,4 @@
     line: "PATH=\\1\\2:{{cmake_path}}\\3"
   vars:
     cmake_path: "/cmake/bin"
+
