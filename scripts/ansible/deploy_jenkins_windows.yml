@@ -4,42 +4,43 @@
   vars_files:
      - vars/win_variables.var
   tasks:
-     - include_tasks: tasks/ansible-install-prereqs-windows.yml
-     - include_tasks: tasks/ansible-install-openenclave-stack-windows.yml
-     - include_tasks: tasks/ansible-install-sgx-driver-windows.yml
+#     - include_tasks: tasks/ansible-install-prereqs-windows.yml
+#     - include_tasks: tasks/ansible-install-openenclave-stack-windows.yml
+#     - include_tasks: tasks/ansible-install-sgx-driver-windows.yml
 
-- name: "Jenkins win slave"
-  win_user: 
-        name: "{{jenkins_win_user}}"
-        password: "{{jekins_win_password}}"
-        groups: "{{Administrators}}"
-- name: "Jenkins win dir"
-  win_file:
-        path: "{{jenkins_win_dir}}"
-        state: "directory"
+     - name: "Jenkins win slave"
+       win_user:
+             name: "{{jenkins_win_user}}"
+             password: "{{jenkins_win_password}}"
+             groups: "Administrators"
+     - name: "Jenkins win dir"
+       win_file:
+             path: "{{jenkins_win_dir}}"
+             state: "directory"
 
-- name: "Jenkins win dir rights"
-  win_acl:
-        path: "{{jenkins_win_dir}}"
-        propagation: "InheritOnly"
-        rights: "FullControl"
-        type: "allow"
-        user: "{{jenkins_slave_user}}"
+     - name: "Jenkins win dir rights"
+       win_acl:
+             path: "{{jenkins_win_dir}}"
+             propagation: "InheritOnly"
+             rights: "FullControl"
+             type: "allow"
+             user: "{{jenkins_win_user}}"
 
-- name: Install Java
-  win_chocolatey:
-    name: "{{ jdk_package }}"
-    state: present
-    version: "{{ java_major_version }}.{{ java_minor_version }}"
+     - name: Install Java
+       win_chocolatey:
+             name: "{{ jdk_package }}"
+             state: present
+             version: "{{ java_major_version }}.{{ java_minor_version }}"
 
-- name: Set Java_home
-  win_environment:
-    state: present
-    name: JAVA_HOME
-    value: 'c:\program files\java\jdk1.{{ java_major_version }}_{{ java_minor_version }}'
-    level: machine
+     - name: Set Java_home
+       win_environment:
+             state: present
+             name: JAVA_HOME
+             value: 'c:\program files\java\jdk1.{{ java_major_version }}_{{ java_minor_version }}'
+             level: machine
 
-- name: Add Java to path
-  win_path:
-    elements:
-      - 'c:\program files\java\jdk{{ java_major_version }}_{{ java_minor_version }}\bin'
+     - name: Add Java to path
+       win_path:
+             elements:
+              - 'c:\program files\java\jdk{{ java_major_version }}_{{ java_minor_version }}\bin'
+            
