@@ -4,9 +4,10 @@
   vars_files:
      - vars/win_variables.var
   tasks:
-#     - include_tasks: tasks/ansible-install-prereqs-windows.yml
+     - include_tasks: tasks/ansible-install-docker-packages-windows.yml
+          #     - include_tasks: tasks/ansible-install-prereqs-windows.yml
 #     - include_tasks: tasks/ansible-install-openenclave-stack-windows.yml
-#     - include_tasks: tasks/ansible-install-sgx-driver-windows.yml
+     - include_tasks: tasks/ansible-install-sgx-driver-windows.yml
 
      - name: "Jenkins win slave"
        win_user:
@@ -43,4 +44,4 @@
        win_path:
              elements:
               - 'c:\program files\java\jdk{{ java_major_version }}_{{ java_minor_version }}\bin'
-            
+

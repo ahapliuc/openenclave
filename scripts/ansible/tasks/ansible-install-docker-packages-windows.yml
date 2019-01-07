@@ -12,8 +12,11 @@
   win_shell: Install-Module -Name "DockerMsftProvider" -Repository "PSGallery" -Force
 - name: Install Docker package #error in this task
   win_shell: Install-Package –ProviderName "DockerMsftProvider" -Name "Docker" -Force
+- win_reboot:
+    reboot_timeout: 360
 - name: Start docker service   #Start-Service docker
   win_service:
     name: docker
     state: started
     start_mode: auto
+
